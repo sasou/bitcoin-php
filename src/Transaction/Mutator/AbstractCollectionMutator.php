@@ -36,11 +36,16 @@ abstract class AbstractCollectionMutator implements \Iterator, \ArrayAccess, \Co
     }
 
     /**
+     * @var int
+     */
+    protected $position = 0;
+
+    /**
      *
      */
     public function rewind()
     {
-        $this->set->rewind();
+        $this->position = 0;
     }
 
     /**
@@ -48,7 +53,7 @@ abstract class AbstractCollectionMutator implements \Iterator, \ArrayAccess, \Co
      */
     public function current()
     {
-        return $this->set->current();
+        return $this->set->offsetGet($this->position);
     }
 
     /**
@@ -56,7 +61,7 @@ abstract class AbstractCollectionMutator implements \Iterator, \ArrayAccess, \Co
      */
     public function key()
     {
-        return $this->set->key();
+        return $this->position;
     }
 
     /**
@@ -64,7 +69,7 @@ abstract class AbstractCollectionMutator implements \Iterator, \ArrayAccess, \Co
      */
     public function next()
     {
-        $this->set->next();
+        ++$this->position;
     }
 
     /**
@@ -72,7 +77,7 @@ abstract class AbstractCollectionMutator implements \Iterator, \ArrayAccess, \Co
      */
     public function valid()
     {
-        return $this->set->valid();
+        return $this->position < $this->set->count();
     }
 
     /**
